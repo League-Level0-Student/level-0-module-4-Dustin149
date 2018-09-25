@@ -10,19 +10,58 @@ import java.awt.event.KeyEvent;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class FruitQuiz extends KeyAdapter {
 
 	void makeQuestions() {
-		question1 = new JLabel("<html>Which is not a real fruit? <br> A: Dragon Fruit <br> B: Durian <br> C: Crazyberry</html>");
+		question1 = new JLabel(
+				"<html>"
+				+ "Which is not a real fruit?"
+				+ "<hr>"
+				+ "<br>"
+				+ "A: Dragon Fruit"
+				+ "<br>"
+				+ "B: Durian"
+				+ "<br>"
+				+ "C: Crazyberry"
+				+ "</html>");
+		
+		question2 = new JLabel(
+				"<html>"
+				+ "Which is not a real fruit?"
+				+ "<hr>"
+				+ "<br>"
+				+ "A: Canadian Frostberry"
+				+ "<br>"
+				+ "B: Starfruit"
+				+ "<br>"
+				+ "C: African Cucumber"
+				+ "</html>");
+		
+		question3 = new JLabel(
+				"<html>"
+				+ "Which one is actually a vegetable and not a fruit?"
+				+ "<hr>"
+				+ "<br>"
+				+ "A: Cucumber"
+				+ "<br>"
+				+ "B: Avacado"
+				+ "<br>"
+				+ "C: Corn"
+				+ "</html>");		
 		// 11. Make another question called "question2".  Use question1 above as a guide.
 	}
-
+	
+	int CorrectTimes = 0;
+	boolean FinishedQuiz = false;
+	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		int keyCode = arg0.getKeyCode();
+		String keyCode = arg0.getKeyText(arg0.getKeyCode());
+		
 		// 1. Print out the key code variable
-
+		
 		// 2. Make 3 int variables that hold the key codes for A, b, and C
 		
 		// 14. Repeat steps 11, 12, and 13 for question3 and question4 - IMPORTANT: The questions must be in reverse order from top to bottom to work properly
@@ -32,9 +71,20 @@ public class FruitQuiz extends KeyAdapter {
 			// 13. check if it is right or wrong like you did for question1
 		
 			
-		if (question1.isShowing()) {
-			// 3. If they selected the right fruit, do steps 4 and 7
+		if (question1.isShowing() && FinishedQuiz == false) {
 			
+			if (keyCode.equalsIgnoreCase("c")) {
+				System.out.println("Correct!");
+				CorrectTimes = CorrectTimes + 1;
+				correct();
+			} else {
+				System.out.println("Incorrect!");
+				incorrect();
+			}
+			
+			nextQuestion(question2);
+			
+			// 3. If they selected the right fruit, do steps 4 and 7
 				// 4. Call the correct() method
 				
 				// 7. Use the nextQuestion() method to go to question2
@@ -43,7 +93,33 @@ public class FruitQuiz extends KeyAdapter {
 			// 8. else (if they touched something else)
 				
 				// 9. Call the incorrect() method
-		
+		} else if(question2.isShowing() && FinishedQuiz == false) { 
+			
+			if (keyCode.equalsIgnoreCase("a")) {
+				System.out.println("Correct!");
+				CorrectTimes = CorrectTimes + 1;
+				correct();
+			} else {
+				System.out.println("Incorrect!");
+				incorrect();
+			}
+			
+			nextQuestion(question3);
+			
+		} else if(question3.isShowing() && FinishedQuiz == false) { 
+			
+			if (keyCode.equalsIgnoreCase("c")) {
+				System.out.println("Correct!");
+				CorrectTimes = CorrectTimes + 1;
+				correct();
+			} else {
+				System.out.println("Incorrect!");
+				incorrect();
+			}
+			
+			FinishedQuiz = true;
+			
+			JOptionPane.showMessageDialog(null, "You got "+CorrectTimes+"/3 correct!");
 		}
 
 	}
